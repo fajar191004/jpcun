@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+  content="width=device=width,initial-scale=1.0">
+  <title>Tebak Kata Jepang</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body style="text-align:center; font-family:sans-serif; margin-top:100px;">
+    <h1>Tebak Kosa Kata Jepang 😎📚 </h1>
+  <h2 id="soal">Kata: ほん (Hon)</h2>
+  <input id="jawaban" placeholder="Tulis jawaban..." />
+  <button onclick="cek()">Cek</button>
+  <p id="hasil"></p>
+
+  <script>
+    const soal = [
+  { jp: "ほん (Hon)", id: ["buku"] },
+  { jp: "経験 (Keiken)", id: ["pengalaman"] },
+  { jp: "場合 (Baai)", id: ["apabila", "kasus"] },
+  { jp: "理由 (Riyuu)", id: ["alasan"] },
+  { jp: "約束 (Yakusoku)", id: ["janji"] },
+  { jp: "準備 (Junbi)", id: ["persiapan"] },
+  { jp: "説明 (Setsumei)", id: ["penjelasan"] },
+  { jp: "注意 (Chuui)", id: ["perhatian", "hati-hati"] },
+  { jp: "安心 (Anshin)", id: ["tenang", "lega"] },
+  { jp: "案内 (Annai)", id: ["panduan", "informasi"] },
+  { jp: "意見 (Iken)", id: ["pendapat"] },
+  { jp: "移動 (Idou)", id: ["perpindahan", "bergerak"] },
+  { jp: "以内 (Inai)", id: ["dalam (jangka waktu/tempat)"] },
+  { jp: "印象 (Inshou)", id: ["kesan"] },
+  { jp: "運転 (Unten)", id: ["mengemudi"] },
+  { jp: "運動 (Undou)", id: ["olahraga", "aktivitas fisik"] },
+  { jp: "遠慮 (Enryo)", id: ["sungkan", "menahan diri"] },
+  { jp: "お祝い (Oiwai)", id: ["perayaan", "selamat"] },
+  { jp: "思い出 (Omoide)", id: ["kenangan"] },
+  { jp: "会話 (Kaiwa)", id: ["percakapan"] },
+  { jp: "科学 (Kagaku)", id: ["ilmu pengetahuan", "sains"] },
+  { jp: "鏡 (Kagami)", id: ["cermin"] },
+  { jp: "感じ (Kanji)", id: ["perasaan", "kesan"] },
+  { jp: "管理 (Kanri)", id: ["pengelolaan", "manajemen"] },
+  { jp: "関係 (Kankei)", id: ["hubungan", "relasi"] },
+  { jp: "環境 (Kankyou)", id: ["lingkungan"] },
+  { jp: "機会 (Kikai)", id: ["kesempatan"] },
+  { jp: "機械 (Kikai)", id: ["mesin"] },
+  { jp: "記録 (Kiroku)", id: ["catatan", "rekor"] },
+  { jp: "経験者 (Keikensha)", id: ["orang berpengalaman"] },
+  { jp: "景色 (Keshiki)", id: ["pemandangan"] },
+  { jp: "警察 (Keisatsu)", id: ["polisi"] },
+  { jp: "計画 (Keikaku)", id: ["rencana"] },
+  { jp: "研究 (Kenkyuu)", id: ["penelitian"] },
+  { jp: "健康 (Kenkou)", id: ["kesehatan"] },
+  { jp: "交通 (Koutsuu)", id: ["lalu lintas", "transportasi"] },
+  { jp: "講義 (Kougi)", id: ["kuliah", "ceramah"] },
+  { jp: "工場 (Koujou)", id: ["pabrik"] },
+  { jp: "講師 (Koushi)", id: ["dosen", "pengajar"] },
+  { jp: "興味 (Kyoumi)", id: ["minat", "ketertarikan"] },
+  { jp: "協力 (Kyōryoku)", id: ["kerja sama"] },
+  { jp: "困る (Komaru)", id: ["kesulitan", "bingung"] },
+  { jp: "再会 (Saikai)", id: ["bertemu kembali"] },
+  { jp: "最近 (Saikin)", id: ["belakangan ini", "akhir-akhir ini"] },
+  { jp: "最高 (Saikou)", id: ["terbaik", "paling tinggi"] },
+  { jp: "最初 (Saisho)", id: ["awal", "pertama"] },
+  { jp: "最後 (Saigo)", id: ["akhir", "terakhir"] },
+  { jp: "作業 (Sagyou)", id: ["pekerjaan", "tugas"] },
+  { jp: "使用 (Shiyou)", id: ["penggunaan"] },
+  { jp: "自然 (Shizen)", id: ["alam", "alami"] },
+  { jp: "出発 (Shuppatsu)", id: ["keberangkatan"] },
+  { jp: "習慣 (Shuukan)", id: ["kebiasaan"] },
+  { jp: "準備中 (Junbichuu)", id: ["sedang dipersiapkan"] },
+  { jp: "信号 (Shingou)", id: ["lampu lalu lintas", "sinyal"] },
+  { jp: "神社 (Jinja)", id: ["kuil Shinto"] },
+  { jp: "世話 (Sewa)", id: ["perawatan", "bantuan"] },
+  { jp: "成績 (Seiseki)", id: ["nilai", "hasil belajar"] },
+  { jp: "生活 (Seikatsu)", id: ["kehidupan"] },
+  { jp: "選択 (Sentaku)", id: ["pilihan", "menyetrika"] },
+  { jp: "相談 (Soudan)", id: ["konsultasi", "diskusi"] },
+  { jp: "卒業 (Sotsugyou)", id: ["kelulusan"] },
+  { jp: "続ける (Tsudzukeru)", id: ["melanjutkan"] },
+  { jp: "注意点 (Chui-ten)", id: ["poin perhatian"] },
+  { jp: "注文 (Chuumon)", id: ["pesanan"] },
+  { jp: "地震 (Jishin)", id: ["gempa bumi"] },
+  { jp: "伝統 (Dentou)", id: ["tradisi"] },
+  { jp: "努力 (Doryoku)", id: ["usaha", "kerja keras"] },
+  { jp: "発表 (Happyou)", id: ["presentasi", "pengumuman"] },
+  { jp: "必要 (Hitsuyou)", id: ["perlu", "penting"] },
+  { jp: "返事 (Henji)", id: ["jawaban", "balasan"] },
+  { jp: "法律 (Houritsu)", id: ["hukum"] },
+  { jp: "報告 (Houkoku)", id: ["laporan"] },
+  { jp: "目的 (Mokuteki)", id: ["tujuan"] },
+  { jp: "約 (Yaku)", id: ["sekitar", "kira-kira"] },
+  { jp: "予定 (Yotei)", id: ["rencana", "jadwal"] },
+  { jp: "連絡 (Renraku)", id: ["kontak", "menghubungi"] },
+  { jp: "理解 (Rikai)", id: ["pemahaman", "mengerti"] },
+  { jp: "連続 (Renzoku)", id: ["berkelanjutan", "terus menerus"] },
+  { jp: "経験的 (Keikenteki)", id: ["empiris", "berdasar pengalaman"] },
+  { jp: "予習 (Yoshuu)", id: ["persiapan pelajaran", "belajar sebelum kelas"] },
+  { jp: "復習 (Fukushuu)", id: ["ulangan", "belajar ulang"] },
+  { jp: "笑顔 (Egao)", id: ["senyum", "wajah tersenyum"] },
+  { jp: "枝 (Eda)", id: ["cabang pohon", "ranting"] },
+  { jp: "絵画 (Kaiga)", id: ["lukisan"] },
+  { jp: "演奏 (Ensou)", id: ["penampilan musik", "pertunjukan"] },
+  { jp: "応募 (Ouho)", id: ["lamaran", "pendaftaran"] },
+  { jp: "加える (Kuwaeru)", id: ["menambahkan"] },
+  { jp: "加わる (Kuwawaru)", id: ["bergabung", "ikut serta"] },
+  { jp: "会場 (Kaijou)", id: ["tempat acara", "lokasi pertemuan"] },
+  { jp: "解決 (Kaiketsu)", id: ["penyelesaian", "solusi"] },
+  { jp: "科学者 (Kagakusha)", id: ["ilmuwan"] },
+  { jp: "価格 (Kakaku)", id: ["harga"] },
+  { jp: "確認 (Kakunin)", id: ["konfirmasi", "memastikan"] },
+  { jp: "覚える (Oboeru)", id: ["mengingat", "menghafal"] },
+  { jp: "感動 (Kandou)", id: ["terharu", "kagum"] },
+  { jp: "感想 (Kansou)", id: ["kesan", "pendapat"] },
+  { jp: "観光 (Kankou)", id: ["wisata", "pariwisata"] },
+  { jp: "期間 (Kikan)", id: ["jangka waktu", "periode"] },
+  { jp: "機能 (Kinou)", id: ["fungsi", "fitur"] },
+  { jp: "希望 (Kibou)", id: ["harapan", "keinginan"] },
+  { jp: "基本 (Kihon)", id: ["dasar", "fundamental"] },
+  { jp: "教育 (Kyouiku)", id: ["pendidikan"] },
+  { jp: "教会 (Kyoukai)", id: ["gereja"] },
+  { jp: "競争 (Kyousou)", id: ["persaingan"] },
+  { jp: "経験 (Keiken)", id: ["pengalaman"] },
+  { jp: "経済 (Keizai)", id: ["ekonomi"] },
+  { jp: "経営 (Keiei)", id: ["manajemen", "pengelolaan usaha"] },
+  { jp: "景気 (Keiki)", id: ["kondisi ekonomi"] },
+  { jp: "警報 (Keihou)", id: ["peringatan", "alarm"] },
+  { jp: "欠席 (Kesseki)", id: ["ketidakhadiran"] },
+  { jp: "決定 (Kettei)", id: ["keputusan", "penetapan"] },
+  { jp: "結果 (Kekka)", id: ["hasil"] },
+  { jp: "原因 (Genin)", id: ["penyebab", "alasan"] },
+  { jp: "限界 (Genkai)", id: ["batas", "limit"] },
+  { jp: "現実 (Genjitsu)", id: ["kenyataan", "realitas"] },
+  { jp: "現場 (Genba)", id: ["lokasi kejadian", "lapangan"] },
+  { jp: "現金 (Genkin)", id: ["uang tunai"] },
+  { jp: "研究所 (Kenkyuujo)", id: ["laboratorium", "pusat riset"] },
+  { jp: "広告 (Koukoku)", id: ["iklan"] },
+  { jp: "工事 (Kouji)", id: ["konstruksi", "pekerjaan bangunan"] },
+  { jp: "講座 (Kouza)", id: ["kursus", "kelas"] },
+  { jp: "効果 (Kouka)", id: ["efek", "hasil"] },
+  { jp: "交通事故 (Koutsuu jiko)", id: ["kecelakaan lalu lintas"] },
+  { jp: "国際 (Kokusai)", id: ["internasional"] },
+  { jp: "国民 (Kokumin)", id: ["rakyat", "warga negara"] },
+  { jp: "国家 (Kokka)", id: ["negara", "bangsa"] },
+  { jp: "最新 (Saishin)", id: ["terbaru"] },
+  { jp: "再生 (Saisei)", id: ["pemutaran ulang", "regenerasi"] },
+  { jp: "参加 (Sanka)", id: ["partisipasi", "ikut serta"] },
+  { jp: "参考 (Sankou)", id: ["referensi"] },
+  { jp: "産業 (Sangyou)", id: ["industri"] },
+  { jp: "失敗 (Shippai)", id: ["gagal", "kesalahan"] },
+  { jp: "市民 (Shimin)", id: ["warga kota", "penduduk"] },
+  { jp: "自然 (Shizen)", id: ["alam", "alami"] },
+  { jp: "社会 (Shakai)", id: ["masyarakat", "sosial"] },
+  { jp: "主張 (Shuchou)", id: ["pendapat", "klaim"] },
+  { jp: "集中 (Shuuchuu)", id: ["konsentrasi"] },
+  { jp: "出席 (Shusseki)", id: ["hadir", "kehadiran"] },
+  { jp: "出発 (Shuppatsu)", id: ["keberangkatan"] },
+  { jp: "信頼 (Shinrai)", id: ["kepercayaan"] },
+  { jp: "親切 (Shinsetsu)", id: ["baik hati", "ramah"] },
+  { jp: "深刻 (Shinkoku)", id: ["serius", "parah"] },
+  { jp: "心理 (Shinri)", id: ["psikologi", "jiwa"] },
+  { jp: "新聞社 (Shinbunsha)", id: ["kantor surat kabar"] },
+  { jp: "世紀 (Seiki)", id: ["abad"] },
+  { jp: "成長 (Seichou)", id: ["pertumbuhan"] },
+  { jp: "政府 (Seifu)", id: ["pemerintah"] },
+  { jp: "成功 (Seikou)", id: ["sukses", "berhasil"] },
+  { jp: "政治 (Seiji)", id: ["politik"] },
+  { jp: "制度 (Seido)", id: ["sistem", "institusi"] },
+  { jp: "成績 (Seiseki)", id: ["nilai", "prestasi"] },
+  { jp: "説明会 (Setsumeikai)", id: ["pertemuan penjelasan"] },
+  { jp: "選手 (Senshu)", id: ["pemain", "atlet"] },
+  { jp: "選挙 (Senkyo)", id: ["pemilihan umum"] },
+  { jp: "存在 (Sonzai)", id: ["keberadaan"] },
+  { jp: "卒業式 (Sotsugyoushiki)", id: ["upacara kelulusan"] },
+  { jp: "対応 (Taiou)", id: ["penanganan", "menanggapi"] },
+  { jp: "大会 (Taikai)", id: ["kompetisi", "turnamen"] },
+  { jp: "体験 (Taiken)", id: ["pengalaman langsung"] },
+  { jp: "担当 (Tantou)", id: ["penanggung jawab"] },
+  { jp: "地球 (Chikyuu)", id: ["bumi"] },
+  { jp: "地方 (Chihou)", id: ["daerah", "wilayah"] },
+  { jp: "中止 (Chuushi)", id: ["pembatalan", "dihentikan"] },
+  { jp: "貯金 (Chokin)", id: ["tabungan"] },
+  { jp: "直接 (Chokusetsu)", id: ["langsung"] },
+  { jp: "伝言 (Dengon)", id: ["pesan (yang dititipkan)"] },
+  { jp: "電灯 (Dentou)", id: ["lampu listrik"] },
+  { jp: "倒産 (Tousan)", id: ["bangkrut"] },
+  { jp: "動物園 (Doubutsuen)", id: ["kebun binatang"] },
+  { jp: "内容 (Naiyou)", id: ["isi", "konten"] },
+  { jp: "仲間 (Nakama)", id: ["teman", "rekan"] },
+  { jp: "日常 (Nichijou)", id: ["sehari-hari", "rutin"] },
+  { jp: "能力 (Nouryoku)", id: ["kemampuan"] },
+  { jp: "農業 (Nougyou)", id: ["pertanian"] },
+  { jp: "配達 (Haitatsu)", id: ["pengantaran", "pengiriman"] },
+  { jp: "発見 (Hakken)", id: ["penemuan"] },
+  { jp: "発展 (Hatten)", id: ["perkembangan", "kemajuan"] },
+  { jp: "判断 (Handan)", id: ["penilaian", "keputusan"] },
+  { jp: "反対 (Hantai)", id: ["oposisi", "menentang"] },
+  { jp: "比較 (Hikaku)", id: ["perbandingan"] },
+  { jp: "必要性 (Hitsuyousei)", id: ["keharusan", "kepentingan"] },
+  { jp: "表現 (Hyougen)", id: ["ungkapan", "ekspresi"] },
+  { jp: "評価 (Hyouka)", id: ["penilaian", "evaluasi"] },
+  { jp: "平和 (Heiwa)", id: ["perdamaian"] },
+  { jp: "変更 (Henkou)", id: ["perubahan", "modifikasi"] },
+  { jp: "報道 (Houdou)", id: ["berita", "laporan media"] },
+  { jp: "保証 (Hoshou)", id: ["jaminan", "garansi"] },
+  { jp: "方法 (Houhou)", id: ["cara", "metode"] },
+  { jp: "未来 (Mirai)", id: ["masa depan"] },
+  { jp: "目的地 (Mokutekichi)", id: ["tujuan akhir", "destinasi"] },
+  { jp: "役割 (Yakuwari)", id: ["peran", "fungsi"] },
+  { jp: "約束事 (Yakusokugoto)", id: ["hal yang dijanjikan"] },
+  { jp: "優勝 (Yuushou)", id: ["kemenangan", "juara"] },
+  { jp: "勇気 (Yuuki)", id: ["keberanian"] },
+  { jp: "余裕 (Yoyuu)", id: ["keleluasaan", "cadangan waktu"] },
+  { jp: "利用 (Riyou)", id: ["penggunaan", "pemanfaatan"] },
+  { jp: "例 (Rei)", id: ["contoh"] },
+  { jp: "礼儀 (Reigi)", id: ["etika", "sopan santun"] },
+  { jp: "練習 (Renshuu)", id: ["latihan"] },
+  { jp: "連絡先 (Renrakusaki)", id: ["alamat kontak"] }
+    ];
+
+    let index = 0;
+
+    function cek() {
+      const jwb = document.getElementById("jawaban").value.trim().toLowerCase();
+      const hasil = document.getElementById("hasil");
+      const jawabanBenar = Array.isArray(soal[index].id) ? soal[index].id.map(a => a.toLowerCase()) : [soal[index].id.toLowerCase()];
+
+      if (jawabanBenar.includes(jwb)) {
+        hasil.style.color = "green";
+        hasil.textContent = "✅ Benar!";
+        index++;
+        if (index < soal.length) {
+          setTimeout(() => {
+            document.getElementById("soal").textContent = "Kata: " + soal[index].jp;
+            document.getElementById("jawaban").value = "";
+            hasil.textContent = "";
+          }, 1000);
+        } else {
+          hasil.style.color = "blue";
+          hasil.textContent = "🎉 Semua soal selesai!";
+        }
+      } else {
+        hasil.style.color = "red";
+        hasil.textContent = "❌ Salah! Jawaban yang benar: " + jawabanBenar.join(" / ");
+      }
+    }
+  </script>
+  <footer>©️ Fajar Cun</footer>
+</body>
+</html>
