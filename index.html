@@ -485,12 +485,16 @@
   { jp: "歴史 (Rekishi)", id: ["sejarah"] }
     ];
 
+  
+  soal.sort(() => Math.random() - 0.5);
+
     let index = 0;
+    document.getElementById("soal").textContent = "Kata: " + soal[index].jp;
 
     function cek() {
       const jwb = document.getElementById("jawaban").value.trim().toLowerCase();
       const hasil = document.getElementById("hasil");
-      const jawabanBenar = Array.isArray(soal[index].id) ? soal[index].id.map(a => a.toLowerCase()) : [soal[index].id.toLowerCase()];
+      const jawabanBenar = soal[index].id.map(a => a.toLowerCase());
 
       if (jawabanBenar.includes(jwb)) {
         hasil.style.color = "green";
