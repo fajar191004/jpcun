@@ -10,7 +10,7 @@
 <body style="text-align:center; font-family:sans-serif; margin-top:100px;">
     <h1>Tebak Kosa Kata Jepang 😎📚 </h1>
   <h2 id="soal">Kata: ほん (Hon)</h2>
-  <input id="jawaban" placeholder="Tulis jawaban..." />
+ <input id="jawaban" placeholder="Tulis jawaban..." autocomplete="off" />
   <button onclick="cek()">Cek</button>
   <p id="hasil"></p>
 
@@ -663,6 +663,11 @@
         hasil.textContent = "❌ Salah! Jawaban yang benar: " + jawabanBenar.join(" / ");
       }
     }
+     document.getElementById("jawaban").addEventListener("keypress", function(e) {
+      if (e.key === "Enter") {
+        cek();
+      }
+    });
   </script>
   <footer>©️ Fajar Cun</footer>
 </body>
