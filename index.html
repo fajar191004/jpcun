@@ -1,23 +1,101 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport"
-  content="width=device=width,initial-scale=1.0">
-  <title>漢字を学ぶ</title>
-  <link rel="stylesheet" href="style.css">
-</head>
-<body style="text-align:center; font-family:sans-serif; margin-top:100px;">
-    <h1>漢字を学ぶ 😎📚 </h1>
-  <h4>By:Kanji study</h4>
-  <h2 id="soal">Kata: ほん (Hon)</h2>
- <input id="jawaban" placeholder="Tulis jawaban..." autocomplete="off" />
-  <button onclick="cek()">Cek</button>
-  <p id="hasil"></p>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FAJARSTUDY</title>
 
-  <script>
-    const soal = [
-  { jp: "ほん (Hon)", id: ["buku"] },
+<style>
+body {
+  background: linear-gradient(135deg, #1e1e2f, #2b2b45);
+  font-family: "Segoe UI", sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  color: white;
+}
+
+.card {
+  background: #ffffff15;
+  backdrop-filter: blur(10px);
+  border-radius: 20px;
+  padding: 30px;
+  width: 330px;
+  text-align: center;
+  box-shadow: 0 0 20px #000;
+}
+
+h2 {
+  margin-bottom: 5px;
+}
+
+#soal {
+  font-size: 32px;
+  margin: 15px 0;
+  color: #ffd6ff;
+}
+
+button {
+  background: linear-gradient(135deg, #ff7ac3, #7aa2ff);
+  border: none;
+  border-radius: 25px;
+  padding: 10px 20px;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+button:hover {
+  transform: scale(1.05);
+}
+
+input {
+  width: 80%;
+  padding: 10px;
+  border-radius: 15px;
+  border: none;
+  outline: none;
+  text-align: center;
+  margin: 10px 0;
+}
+
+#hasil {
+  margin-top: 10px;
+  font-weight: bold;
+}
+
+.score {
+  margin-top: 10px;
+  font-size: 14px;
+  color: #baffc9;
+}
+</style>
+</head>
+
+<body>
+
+<div class="card">
+  <h2>Jepang Quiz  <img src="https://flagcdn.com/w40/jp.png"></h2>
+  <div id="soal">Hon</div>
+
+  <button onclick="playSound()">🔊 Dengarkan</button>
+
+  <br><br>
+
+  <input id="jawaban" placeholder="Jawaban..." autocomplete="off">
+  <br>
+  <button onclick="cek()">Cek</button>
+
+  <div id="hasil"></div>
+  <div class="score">Skor: <span id="skor">0</span></div>
+  <footer style="margin-top:30px;">©️Kanji study</footer>
+</div>
+
+<script>
+const soal = [
+    { jp: "ほん (Hon)", id: ["buku"] },
   { jp: "経験 (Keiken)", id: ["pengalaman"] },
   { jp: "場合 (Baai)", id: ["apabila", "kasus"] },
   { jp: "理由 (Riyuu)", id: ["alasan"] },
@@ -634,42 +712,68 @@
   { jp: "留守 (Rusu)", id: ["tidak di rumah"] }
     ];
 
-  
-  soal.sort(() => Math.random() - 0.5);
 
-    let index = 0;
-    document.getElementById("soal").textContent = "Kata: " + soal[index].jp;
 
-    function cek() {
-      const jwb = document.getElementById("jawaban").value.trim().toLowerCase();
-      const hasil = document.getElementById("hasil");
-      const jawabanBenar = soal[index].id.map(a => a.toLowerCase());
+soal.sort(() => Math.random() - 0.5);
 
-      if (jawabanBenar.includes(jwb)) {
-        hasil.style.color = "green";
-        hasil.textContent = "✅ Benar!";
-        index++;
-        if (index < soal.length) {
-          setTimeout(() => {
-            document.getElementById("soal").textContent = "Kata: " + soal[index].jp;
-            document.getElementById("jawaban").value = "";
-            hasil.textContent = "";
-          }, 1000);
-        } else {
-          hasil.style.color = "blue";
-          hasil.textContent = "🎉 Semua soal selesai!";
-        }
-      } else {
-        hasil.style.color = "red";
-        hasil.textContent = "❌ Salah! Jawaban yang benar: " + jawabanBenar.join(" / ");
-      }
-    }
-     document.getElementById("jawaban").addEventListener("keypress", function(e) {
-      if (e.key === "Enter") {
-        cek();
-      }
-    });
-  </script>
-  <footer>©️ Fajar Cun</footer>
+let index = 0;
+let skor = 0;
+
+updateSoal();
+
+function updateSoal() {
+  document.getElementById("soal").textContent = soal[index].jp;
+  playSound();
+}
+
+function playSound() {
+  speechSynthesis.cancel();
+  let u = new SpeechSynthesisUtterance(soal[index].jp);
+  u.lang = "ja-JP";
+  u.rate = 0.85;
+  speechSynthesis.speak(u);
+}
+
+function cek() {
+  let input = document.getElementById("jawaban");
+  let hasil = document.getElementById("hasil");
+  let jawabanUser = input.value.trim().toLowerCase();
+
+  // cek apakah jawaban user ada di array id
+  let benar = soal[index].id.some(j =>
+    j.toLowerCase() === jawabanUser
+  );
+
+  if (benar) {
+    skor += 10;
+    hasil.style.color = "#7CFF7C";
+    hasil.textContent = "✨ Benar!";
+    index++;
+  } else {
+    hasil.style.color = "#ff7c7c";
+    // gabungkan semua jawaban benar (kalau lebih dari satu)
+    hasil.textContent = `❌ Salah! Jawaban benar: ${soal[index].id.join(" / ")}`;
+  }
+
+  document.getElementById("skor").textContent = skor;
+  input.value = "";
+
+  if (index < soal.length) {
+    setTimeout(() => {
+      hasil.textContent = "";
+      updateSoal();
+    }, 1500); // aku panjangkan dikit biar kebaca
+  } else {
+    hasil.textContent = "🎉 Selesai!";
+  }
+}
+
+
+document.getElementById("jawaban").addEventListener("keypress", e => {
+  if (e.key === "Enter") cek();
+});
+</script>
+
+
 </body>
 </html>
